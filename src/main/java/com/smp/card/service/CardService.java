@@ -1,6 +1,7 @@
 package com.smp.card.service;
 
 import com.smp.card.DTO.CardRequestDTO;
+import com.smp.card.exception.CardNotFoundException;
 import com.smp.card.model.Card;
 import com.smp.card.repository.CardRepository;
 import com.smp.card.util.YearMonthAttributeConverter;
@@ -30,6 +31,17 @@ public class CardService {
                         .companyName(dto.getCompanyName())
                         .balance(0.0)
                 .build());
+
+    }
+
+    public void deleteCardByClientName(String clientName) {
+        Card cardToDelete = repository.findByClientName(clientName);
+        if(cardToDelete == null) {
+            throw new CardNotFoundException("No card was found for client " + clientName);
+
+        } else {
+            repository.delete(cardToDelete);
+        }
 
     }
 
