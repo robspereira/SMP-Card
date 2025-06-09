@@ -2,10 +2,7 @@ package com.smp.card.model;
 
 import com.smp.card.util.YearMonthAttributeConverter;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.YearMonth;
 
@@ -22,16 +19,20 @@ public class Card {
     @Column(name = "CARD_ID")
     private Long id;
 
+    @Setter
     @Column(nullable = false, name = "CARD_NUMBER")
     private String cardNumber;
 
+    @Setter
     @Column(nullable = false, name = "SECURITY_NUMBER")
     private String securityNumber;
 
+    @Setter
     @Column(nullable = false, name = "EXPIRATION_DATE")
     @Convert(converter = YearMonthAttributeConverter.class)
     private YearMonth expirationDate;
 
+    @Setter
     @Column(nullable = false, name = "BALANCE")
     private Double balance;
 

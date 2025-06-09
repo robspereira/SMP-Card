@@ -1,6 +1,7 @@
 package com.smp.card.service;
 
 import com.smp.card.DTO.CardRequestDTO;
+import com.smp.card.DTO.CardUpdateRequestDTO;
 import com.smp.card.exception.CardNotFoundException;
 import com.smp.card.model.Card;
 import com.smp.card.repository.CardRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.YearMonth;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -31,6 +33,23 @@ public class CardService {
                         .companyName(dto.getCompanyName())
                         .balance(0.0)
                 .build());
+
+    }
+
+    public void updateCard(CardUpdateRequestDTO dto) {
+        Optional<Card> cardToUpdate = repository.findById(dto.getId());
+
+        if (cardToUpdate.isEmpty()) {
+            throw new CardNotFoundException("Cartão com ID " + dto.getId() + " não encontrado.");
+        }
+
+        cardToUpdate.ifPresent(card -> {
+            card.setSecurityNumber(dto.isSecurityNumber() ? generateSecurityNumber() : card.getSecurityNumber());
+            card.setCardNumber(dto.isNewNumber() ? generateCardNumber() : card.getCardNumber());
+            card.setExpirationDate(converter.convertToEntityAttribute(dto.getExpirationDate()));
+        });
+
+        repository.save(cardToUpdate.get());
 
     }
 
