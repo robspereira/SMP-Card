@@ -1,5 +1,6 @@
 package com.smp.card.controller;
 
+import com.smp.card.DTO.CardInformationDTO;
 import com.smp.card.DTO.CardUpdateRequestDTO;
 import com.smp.card.service.CardService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,11 @@ public class CardController {
     public ResponseEntity<Void> deleteCardByClientName(@RequestParam final String clientName){
         service.deleteCardByClientName(clientName);
         return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<CardInformationDTO> getCardInformationByClientId(@RequestParam final Long clientId){
+        return ResponseEntity.ok(service.getClientCardInformation(clientId));
     }
 
     @PutMapping("/update")

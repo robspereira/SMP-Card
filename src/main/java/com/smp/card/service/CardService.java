@@ -1,5 +1,6 @@
 package com.smp.card.service;
 
+import com.smp.card.DTO.CardInformationDTO;
 import com.smp.card.DTO.CardRequestDTO;
 import com.smp.card.DTO.CardUpdateRequestDTO;
 import com.smp.card.exception.CardNotFoundException;
@@ -61,6 +62,21 @@ public class CardService {
         } else {
             repository.delete(cardToDelete);
         }
+
+    }
+
+    public CardInformationDTO getClientCardInformation(Long clientId){
+        Card cardInfo = repository.findByClientId(clientId).orElseThrow(() ->
+                new CardNotFoundException("Nenhum cartão encontrado para o cliente informado."));
+
+        return CardInformationDTO
+                .builder()
+                .clientName(cardInfo.getClientName())
+                .clientDocumentNumber(cardInfo.getClientDocumentNumber())
+                .cardNumber(cardInfo.getCardNumber())
+                .expirationDate(cardInfo.getExpirationDate())
+                .balance(cardInfo.getBalance())
+                .build();
 
     }
 
