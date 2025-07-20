@@ -42,6 +42,9 @@ public class Card {
     @Column(nullable = false, name = "CARD_CLIENT_NAME")
     private String clientName;
 
+    @Column(nullable = false, name = "CARD_CLIENT_DOCUMENT_NUMBER")
+    private String clientDocumentNumber;
+
     @Column(nullable = false, name = "COMPANY_ID")
     private Long companyId;
 

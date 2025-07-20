@@ -19,6 +19,8 @@ public class CardRequestDTO {
 
     private String clientName;
 
+    private String clientDocumentNumber;
+
     private Long companyId;
 
     private String companyName;
